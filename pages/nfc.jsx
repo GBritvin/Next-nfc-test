@@ -1,7 +1,8 @@
 import { useState } from "react";
 
 export default function Nfc() {
-  const [readnilk, setReadnik] = useState();
+  const [tagData, setTagData] = useState();
+  const [tagSerialNumber, setTagSerialNumber] = useState();
   async function readTag() {
     console.log(window);
     if ("NDEFReader" in window) {
@@ -9,23 +10,23 @@ export default function Nfc() {
       try {
         await ndef.scan();
         ndef.onreading = (event) => {
+          setTagSerialNumber(event.serialNumber);
           const decoder = new TextDecoder();
-          console.log(event);
           for (const record of event.message.records) {
             console.log(record);
             console.log("Record type:  " + record.recordType);
             console.log("MIME type:    " + record.mediaType);
             console.log("=== data ===\n" + decoder.decode(record.data));
-            setReadnik(decoder.decode(record.data));
+            setTagData(decoder.decode(record.data));
           }
         };
       } catch (error) {
         console.log(error);
-        setReadnik(error);
+        setTagData(error);
       }
     } else {
       console.log("Web NFC is not supported.");
-      setReadnik("no");
+      setTagData("no");
     }
   }
 
@@ -33,7 +34,7 @@ export default function Nfc() {
     <div>
       <button onClick={readTag}>NFC start</button>
       <button>NFC Stop</button>
-      {readnilk}
+      {tagData}
     </div>
   );
 }
