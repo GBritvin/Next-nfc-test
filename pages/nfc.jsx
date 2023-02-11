@@ -35,6 +35,7 @@ export default function Nfc() {
       <button onClick={readTag}>NFC start</button>
       <button>NFC Stop</button>
       {tagData}
+      {tagSerialNumber}
     </div>
   );
 }
