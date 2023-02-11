@@ -14,7 +14,7 @@ export default function Nfc() {
             console.log("Record type:  " + record.recordType);
             console.log("MIME type:    " + record.mediaType);
             console.log("=== data ===\n" + decoder.decode(record.data));
-            setReadnik(record.length);
+            setReadnik(decoder.decode(record.data));
           }
         };
       } catch (error) {
