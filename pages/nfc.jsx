@@ -10,7 +10,9 @@ export default function Nfc() {
         await ndef.scan();
         ndef.onreading = (event) => {
           const decoder = new TextDecoder();
+          console.log(event);
           for (const record of event.message.records) {
+            console.log(record);
             console.log("Record type:  " + record.recordType);
             console.log("MIME type:    " + record.mediaType);
             console.log("=== data ===\n" + decoder.decode(record.data));
